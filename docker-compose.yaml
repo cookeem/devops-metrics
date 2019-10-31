@@ -1,0 +1,16 @@
+version: '3'
+services:
+  prometheus-golang:
+    image: prometheus-golang
+    container_name: prometheus-golang
+    hostname: prometheus-golang
+    ports:
+    - "8080:8080"
+  prometheus:
+    image: prom/prometheus:v2.13.1
+    container_name: prometheus
+    hostname: prometheus
+    volumes:
+    - ./prometheus_data/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+    - "9090:9090"

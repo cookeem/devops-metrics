@@ -1,0 +1,26 @@
+# 暴露30000-30009 nodeport 到本机
+kind: Cluster
+apiVersion: kind.sigs.k8s.io/v1alpha3
+nodes:
+- role: control-plane
+  extraPortMappings:
+  - containerPort: 30000
+    hostPort: 30000
+  - containerPort: 30001
+    hostPort: 30001
+  - containerPort: 30002
+    hostPort: 30002
+  - containerPort: 30003
+    hostPort: 30003
+  - containerPort: 30004
+    hostPort: 30004
+  - containerPort: 30005
+    hostPort: 30005
+  - containerPort: 30006
+    hostPort: 30006
+  - containerPort: 30007
+    hostPort: 30007
+  - containerPort: 30008
+    hostPort: 30008
+  - containerPort: 30009
+    hostPort: 30009

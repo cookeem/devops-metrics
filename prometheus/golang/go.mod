@@ -9,3 +9,5 @@ require (
 	github.com/prometheus/common v0.0.0-20180518154759-7600349dcfe1
 	github.com/prometheus/procfs v0.0.0-20180705121852-ae68e2d4c00f
 )
+
+go 1.13

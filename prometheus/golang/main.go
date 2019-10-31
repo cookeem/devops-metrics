@@ -12,12 +12,14 @@ import (
 )
 
 var (
-	counter = prometheus.NewCounter(
+	counter = prometheus.NewCounterVec(
 		prometheus.CounterOpts{
 			Namespace: "golang",
 			Name:      "my_counter",
 			Help:      "This is my counter",
-		})
+		},
+		[]string{"device", "status"},
+	)
 
 	gauge = prometheus.NewGauge(
 		prometheus.GaugeOpts{
@@ -44,6 +46,9 @@ var (
 func main() {
 	rand.Seed(time.Now().Unix())
 
+	devices := []string{"devops-cnode01", "devops-cnode02", "devops-cnode03", "devops-cnode04"}
+	statuses := []string{"up", "error", "restart"}
+
 	histogramVec := prometheus.NewHistogramVec(prometheus.HistogramOpts{
 		Name: "prom_request_time",
 		Help: "Time it has taken to retrieve the metrics",
@@ -60,8 +65,11 @@ func main() {
 
 	go func() {
 		for {
-			counter.Add(rand.Float64() * 5)
-			gauge.Add(rand.Float64()*15 - 5)
+			device := devices[rand.Intn(len(devices))]
+			status := statuses[rand.Intn(len(statuses))]
+			labels := prometheus.Labels{"device": device, "status": status}
+			counter.With(labels).Add(rand.Float64() * 5)
+			gauge.Set(rand.Float64() * 2)
 			histogram.Observe(rand.Float64() * 10)
 			summary.Observe(rand.Float64() * 10)
 
